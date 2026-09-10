@@ -83,8 +83,26 @@ shows a delivery-failed message with your address if the request fails.
 
 ## Deploying
 
-`npm run build` emits a static bundle in `dist/`, which any static host will
-serve — Vercel, Netlify, Cloudflare Pages or GitHub Pages. Set the project root
-to `portfolio/`, the build command to `npm run build` and the output directory to
-`dist`. For GitHub Pages, also set `base` in `vite.config.ts` to your repository
-name.
+`npm run build` emits a static bundle in `dist/` that any static host will serve.
+
+### GitHub Pages (already wired up)
+
+`.github/workflows/deploy.yml` builds and publishes on every push to `main`. The
+only setup step is in the repository: **Settings → Pages → Build and deployment
+→ Source: GitHub Actions**. Push after that and the site goes live.
+
+The workflow works out the base path itself: a repo named
+`<username>.github.io` is served from the domain root, and any other repo from
+`/<repo>/`. It passes the right value to the build as `VITE_BASE`, so asset
+URLs, fonts, the résumé and the hero video resolve either way.
+
+### Vercel, Netlify or Cloudflare Pages
+
+Import the repository and accept the defaults — build command `npm run build`,
+output directory `dist`. These serve from the domain root, so `VITE_BASE` is not
+needed and `base` falls back to `/`.
+
+### Anywhere else
+
+Serve `dist/` as static files. If it is not at the domain root, build with
+`VITE_BASE=/your/path/ npm run build`.

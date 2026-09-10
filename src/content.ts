@@ -22,8 +22,11 @@ export const profile = {
     'I turn market opportunity into operating reality — from a single-city launch to 350+ dark stores across 7 states, with 52% revenue growth along the way.',
   /** The two short uppercase lines in the hero's quote card. */
   motto: ['STRATEGY IS THE CRAFT.', 'GROWTH IS THE PROOF.'],
-  /** Your CV, served from portfolio/public/resume.pdf. */
-  resumeUrl: '/resume.pdf',
+  /**
+   * Your CV, served from public/resume.pdf. BASE_URL keeps this correct when
+   * the site is deployed under a sub-path such as /portfolio/.
+   */
+  resumeUrl: `${import.meta.env.BASE_URL}resume.pdf`,
 } as const;
 
 /** Nav links across the top of the hero. */

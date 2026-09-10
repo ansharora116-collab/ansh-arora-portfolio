@@ -1,14 +1,16 @@
 
 @import "tailwindcss";
 
-/* Fonts are self-hosted from public/fonts so the page does not block on a
-   third-party request. Montserrat is a variable font covering 300–700. */
+/* Fonts are self-hosted from src/assets/fonts so the page does not block on a
+   third-party request. They live under src/ rather than public/ so Vite
+   rewrites these URLs for whatever base path the site is deployed under.
+   Montserrat is a variable font covering 300–700. */
 @font-face {
   font-family: 'Bebas Neue';
   font-style: normal;
   font-weight: 400;
   font-display: swap;
-  src: url('/fonts/bebasneue-400.woff2') format('woff2');
+  src: url('./assets/fonts/bebasneue-400.woff2') format('woff2');
 }
 
 @font-face {
@@ -16,7 +18,7 @@
   font-style: normal;
   font-weight: 300 700;
   font-display: swap;
-  src: url('/fonts/montserrat-var.woff2') format('woff2');
+  src: url('./assets/fonts/montserrat-var.woff2') format('woff2');
 }
 
 @font-face {
@@ -24,7 +26,7 @@
   font-style: normal;
   font-weight: 400;
   font-display: swap;
-  src: url('/fonts/herrvonmuellerhoff-400.woff2') format('woff2');
+  src: url('./assets/fonts/herrvonmuellerhoff-400.woff2') format('woff2');
 }
 html, body {
   margin: 0;
