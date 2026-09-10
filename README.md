@@ -48,18 +48,22 @@ It is organised in the order the page reads:
 If you add or remove a section, update `sectionLabels` so the numbering stays
 in sequence, and `navItems` so the nav still matches.
 
-## Adding your media
+## Your media
 
-Your résumé is already in place at `public/resume.pdf`, so the hero's Download
-Resume button works. Two assets are still missing — the site renders complete
-without them, falling back to a gold gradient and a monogram plate:
+All three assets are in place. To change any of them:
 
-- **Hero video** — put an `.mp4` at `public/videos/hero.mp4`. Without it the hero
-  shows an animated gradient, which leaves the right half of the screen fairly
-  bare; a video is what fills it.
-- **Portrait** — put an image in `src/assets/`, then in
-  `src/components/AboutSection.tsx` import it and pass it through
-  `about.portrait`. Without it you get the monogram plate.
+- **Résumé** — replace `public/resume.pdf`, or repoint `profile.resumeUrl`.
+- **Hero video** — replace `public/videos/hero.mp4`. The hero scales it to the
+  full viewport height, so supply it at 1080p or better; anything smaller gets
+  stretched and looks soft. Without the file the hero falls back to an animated
+  gradient.
+- **Portrait** — replace `src/assets/about.jpg`. The frame is 4:5 and crops from
+  the top, so use a portrait-orientation photo with the face in the upper half.
+  About 900px wide is plenty: the card renders at 390px, which covers a 2x
+  retina screen. Setting `about.portrait` to null falls back to a monogram plate.
+
+Strip metadata from anything published here — `ffmpeg -i in.jpg -map_metadata -1
+out.jpg` does it. Phone photos often carry location data.
 
 The favicon at `public/favicon.svg` is a monogram; change the letter in it to
 match `profile.monogram`.

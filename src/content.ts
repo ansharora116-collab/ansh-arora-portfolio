@@ -4,6 +4,8 @@
  * need to touch the component files to change your details.
  */
 
+import portraitImg from './assets/about.jpg';
+
 export const profile = {
   /** Shown in the nav, top-left. */
   navName: 'ANSH.',
@@ -63,10 +65,12 @@ export const about = {
     { value: '5X', label: 'Competition Podiums', gold: true },
   ],
   /**
-   * Your portrait. Drop a photo in src/assets/, import it in
-   * AboutSection.tsx and pass it here. Null renders the monogram plate.
+   * Your portrait, imported at the top of this file. To change it, replace
+   * src/assets/about.jpg. Set this to null to fall back to the monogram plate.
+   * The frame is 4:5 and crops from the top, so a portrait-orientation photo
+   * with the face in the upper half sits best.
    */
-  portrait: null as string | null,
+  portrait: portraitImg as string | null,
 };
 
 export interface Project {
