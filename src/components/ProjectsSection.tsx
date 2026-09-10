@@ -73,7 +73,23 @@ export const ProjectsSection: React.FC = () => {
 >
           {projects.map((project) => (
             <ScrollStackItem key={project.title}>
-              <div className="relative w-full rounded-2xl border border-[#8C6D4F]/50 bg-[#0E0C0A] p-8 sm:p-12 shadow-[0_25px_70px_rgba(0,0,0,0.98)] group overflow-hidden transition-colors duration-500 hover:border-[#D4AF37]">
+              <div
+                /*
+                 * The whole card opens the work, not just the button at the
+                 * bottom. The button stays as the keyboard-reachable control;
+                 * this is the mouse affordance the hover state already implies.
+                 */
+                onClick={
+                  project.linkUrl
+                    ? (e) => {
+                        // Let a real click on the CTA anchor through untouched.
+                        if ((e.target as HTMLElement).closest('a')) return;
+                        window.open(project.linkUrl, '_blank', 'noopener,noreferrer');
+                      }
+                    : undefined
+                }
+                className={`relative w-full rounded-2xl border border-[#8C6D4F]/50 bg-[#0E0C0A] p-8 sm:p-12 shadow-[0_25px_70px_rgba(0,0,0,0.98)] group overflow-hidden transition-colors duration-500 hover:border-[#D4AF37] ${project.linkUrl ? 'cursor-pointer' : ''}`}
+              >
                 
                 {/* Top Gold Border Light Flare */}
                 <div className="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-[#D4AF37]/80 to-transparent" />

@@ -174,6 +174,70 @@ export const projects: Project[] = [
       { label: 'GRADE', value: 'A' },
     ],
   },
+  {
+    number: '05',
+    title: 'MU Muse Match',
+    category: 'PRODUCT / AI MATCHMAKING',
+    description:
+      'A compatibility platform for verified Masters\u2019 Union students, built end to end. Instead of swiping on photos it profiles people across OCEAN personality traits, loyalty attitudes, ambition and lifestyle, then matches on the result and coaches the pairing afterwards.',
+    linkUrl: 'https://preview--mu-muse-match.lovable.app',
+    linkLabel: 'OPEN THE APP',
+    tech: [
+      'Product Design',
+      'Psychometrics',
+      'OCEAN Profiling',
+      'AI Matchmaking',
+      'Lovable',
+      'Supabase',
+    ],
+    metrics: [
+      { label: 'ACCESS', value: 'Verified MU email' },
+      { label: 'ENGINE', value: 'Psychometric scoring' },
+      { label: 'STATUS', value: 'Live preview' },
+    ],
+  },
+  {
+    number: '06',
+    title: 'India Coffee & Caf\u00e9 Market Map',
+    category: 'VC RESEARCH / MARKET STRATEGY',
+    description:
+      'A ten-slide investor-style market map arguing that India\u2019s caf\u00e9 boom is a marketing channel and the durable profit sits in the home cup. Built on company filings rather than aggregators, it lines up Tata Starbucks against CCL/Continental and closes on a backable position.',
+    linkUrl: `${import.meta.env.BASE_URL}work/coffee-market-map.pdf`,
+    linkLabel: 'VIEW THE DECK',
+    tech: [
+      'Market Sizing',
+      'Competitive Benchmarking',
+      'Unit Economics',
+      'Financial Analysis',
+      'Investment Thesis',
+    ],
+    metrics: [
+      { label: 'SCOPE', value: '\u20b98,200 Cr market' },
+      { label: 'EVIDENCE', value: 'FY26 filings' },
+      { label: 'TEAM', value: 'Team 6, PGP-TBM' },
+    ],
+  },
+  {
+    number: '07',
+    title: 'Orders-to-Stock-Alert Automation',
+    category: 'OPERATIONS / WORKFLOW AUTOMATION',
+    description:
+      'A no-code inventory system for a coffee shop. Every order read from Airtable is exploded through its recipe, the ingredient stock is decremented, and anything that falls to its reorder threshold triggers a single alert email carrying a ready-to-send supplier request \u2014 with a failure handler so a broken run never passes silently.',
+    linkUrl: `${import.meta.env.BASE_URL}work/coffee-stock-alert.blueprint.json`,
+    linkLabel: 'VIEW THE BLUEPRINT',
+    tech: [
+      'Make.com',
+      'Airtable',
+      'Process Design',
+      'Inventory Logic',
+      'Error Handling',
+    ],
+    metrics: [
+      { label: 'TRIGGER', value: 'New order row' },
+      { label: 'LOGIC', value: 'Recipe-based depletion' },
+      { label: 'OUTPUT', value: 'Threshold alert email' },
+    ],
+  },
 ];
 
 /** The four bento cards in the Capability Matrix section. */
