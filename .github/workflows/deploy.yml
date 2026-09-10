@@ -24,7 +24,7 @@ jobs:
 
       - uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: 22
           cache: npm
 
       - run: npm ci
@@ -49,7 +49,12 @@ jobs:
       # to 404.html keeps deep links working if you ever add routes.
       - run: cp dist/index.html dist/404.html
 
+      # enablement turns Pages on and points its source at GitHub Actions, so
+      # the repository needs no manual setup before the first deploy.
       - uses: actions/configure-pages@v5
+        with:
+          enablement: true
+
       - uses: actions/upload-pages-artifact@v3
         with:
           path: dist
