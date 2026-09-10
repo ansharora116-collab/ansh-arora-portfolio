@@ -41,6 +41,15 @@ export const HeroSection: React.FC = () => {
   const [menuOpen, setMenuOpen] = useState(false);
 
   useEffect(() => {
+    if (!menuOpen) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') setMenuOpen(false);
+    };
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, [menuOpen]);
+
+  useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
       setCursorPos({ x: e.clientX, y: e.clientY });
     };
@@ -136,6 +145,20 @@ export const HeroSection: React.FC = () => {
         </div>
       </div>
 
+      {/* Fixed rather than in the hero header: the header scrolls away after the
+          first screen, which left no way to open the menu further down. */}
+      <button
+        type="button"
+        aria-label="Open menu"
+        aria-expanded={menuOpen}
+        onClick={() => setMenuOpen(true)}
+        className={`md:hidden fixed top-4 right-4 z-30 w-11 h-11 flex flex-col justify-center items-end gap-[5px] pr-2 rounded-full bg-black/40 backdrop-blur-sm transition-opacity duration-200 ${menuOpen ? 'opacity-0 pointer-events-none' : 'opacity-100'}`}
+      >
+        <span className="block h-[1.5px] w-6 bg-[#EAD8C7]" />
+        <span className="block h-[1.5px] w-4 bg-[#EAD8C7]" />
+        <span className="block h-[1.5px] w-6 bg-[#EAD8C7]" />
+      </button>
+
       {/* ================= MOBILE MENU PANEL ================= */}
       {menuOpen && (
         <motion.div
@@ -143,8 +166,27 @@ export const HeroSection: React.FC = () => {
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           transition={{ duration: 0.25 }}
-          className="fixed inset-0 z-40 bg-black/97 backdrop-blur-sm md:hidden flex flex-col items-center justify-center gap-2 px-8"
+          onClick={(e) => {
+            // Tapping the empty area around the links dismisses too.
+            if (e.target === e.currentTarget) setMenuOpen(false);
+          }}
+          className="fixed inset-0 z-40 bg-black/97 backdrop-blur-sm md:hidden flex flex-col items-center justify-center gap-2 px-8 touch-none overscroll-contain"
         >
+          {/* The burger sits in a lower stacking layer, so once the panel is up
+              its close state is unreachable. This is the control that actually
+              dismisses the menu, placed where the burger was. */}
+          <button
+            type="button"
+            aria-label="Close menu"
+            onClick={() => setMenuOpen(false)}
+            className="absolute top-6 right-4 w-11 h-11 flex items-center justify-center text-[#EAD8C7] active:text-[#D4AF37]"
+          >
+            <span className="relative block w-6 h-6">
+              <span className="absolute top-1/2 left-0 w-6 h-[1.5px] bg-current rotate-45" />
+              <span className="absolute top-1/2 left-0 w-6 h-[1.5px] bg-current -rotate-45" />
+            </span>
+          </button>
+
           {navItems.map((item, i) => (
             <motion.a
               key={item.name}
@@ -210,26 +252,6 @@ export const HeroSection: React.FC = () => {
             ))}
           </nav>
 
-          {/* Phones and tablets get no room for the inline nav, so it collapses
-              into this. Without it there was no way to reach a section on a
-              phone except scrolling the whole page. */}
-          <button
-            type="button"
-            aria-label={menuOpen ? 'Close menu' : 'Open menu'}
-            aria-expanded={menuOpen}
-            onClick={() => setMenuOpen((v) => !v)}
-            className="md:hidden ml-auto flex flex-col justify-center items-end gap-[5px] w-11 h-11 -mr-2"
-          >
-            <span
-              className={`block h-[1.5px] bg-[#EAD8C7] transition-all duration-300 ${menuOpen ? 'w-6 translate-y-[6.5px] rotate-45' : 'w-6'}`}
-            />
-            <span
-              className={`block h-[1.5px] bg-[#EAD8C7] transition-all duration-300 ${menuOpen ? 'opacity-0 w-6' : 'w-4'}`}
-            />
-            <span
-              className={`block h-[1.5px] bg-[#EAD8C7] transition-all duration-300 ${menuOpen ? 'w-6 -translate-y-[6.5px] -rotate-45' : 'w-6'}`}
-            />
-          </button>
 
           {/* Right Action */}
           <a

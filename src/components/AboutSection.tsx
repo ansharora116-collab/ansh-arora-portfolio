@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { motion, useMotionValue, useTransform, useSpring } from 'framer-motion';
 import type { Variants } from 'framer-motion';
 import { profile, about, sectionLabels } from '../content';
@@ -65,6 +65,45 @@ export const AboutSection: React.FC = () => {
     mouseX.set(0);
     mouseY.set(0);
   };
+
+  /*
+   * Touch devices never fire the mouse events above, so on a phone the card sat
+   * inert. These drive the same motion values from the finger position, so a
+   * drag across the portrait tilts it exactly as a cursor does.
+   *
+   * Deliberately no preventDefault: the card is tall enough that swallowing the
+   * touchmove would trap the page scroll.
+   */
+  const releaseTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  const trackTouch = (touch: React.Touch) => {
+    if (!cardRef.current) return;
+    const rect = cardRef.current.getBoundingClientRect();
+    mouseX.set((touch.clientX - rect.left) / rect.width - 0.5);
+    mouseY.set((touch.clientY - rect.top) / rect.height - 0.5);
+    spotlightX.set(touch.clientX - rect.left);
+    spotlightY.set(touch.clientY - rect.top);
+  };
+
+  const handleTouchStart = (e: React.TouchEvent<HTMLDivElement>) => {
+    if (releaseTimer.current) clearTimeout(releaseTimer.current);
+    setIsCardHovered(true);
+    trackTouch(e.touches[0]);
+  };
+
+  const handleTouchMove = (e: React.TouchEvent<HTMLDivElement>) => trackTouch(e.touches[0]);
+
+  const handleTouchEnd = () => {
+    // Settle the tilt straight away, but let the glow linger briefly so a quick
+    // tap still reads as a response rather than a flicker.
+    mouseX.set(0);
+    mouseY.set(0);
+    releaseTimer.current = setTimeout(() => setIsCardHovered(false), 450);
+  };
+
+  useEffect(() => () => {
+    if (releaseTimer.current) clearTimeout(releaseTimer.current);
+  }, []);
 
   return (
     <section 
@@ -197,6 +236,10 @@ export const AboutSection: React.FC = () => {
               onMouseMove={handleMouseMove}
               onMouseEnter={handleMouseEnter}
               onMouseLeave={handleMouseLeave}
+              onTouchStart={handleTouchStart}
+              onTouchMove={handleTouchMove}
+              onTouchEnd={handleTouchEnd}
+              onTouchCancel={handleTouchEnd}
               initial={{ opacity: 0, scale: 0.9, y: 30 }}
               whileInView={{ opacity: 1, scale: 1, y: 0 }}
               viewport={{ once: true }}
