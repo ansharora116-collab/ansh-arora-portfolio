@@ -111,7 +111,7 @@ export const ContactSection: React.FC = () => {
                     href={row.href}
                     target={row.href.startsWith('http') ? '_blank' : undefined}
                     rel={row.href.startsWith('http') ? 'noopener noreferrer' : undefined}
-                    className="flex items-baseline gap-4 group w-fit"
+                    className="flex items-center gap-4 group w-fit min-h-[44px] py-1"
                   >
                     <span className="text-[9.5px] font-mono tracking-[0.25em] uppercase text-[#8C6D4F] w-20 shrink-0">
                       {row.label}

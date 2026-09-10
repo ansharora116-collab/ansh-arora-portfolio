@@ -28,6 +28,19 @@
   font-display: swap;
   src: url('./assets/fonts/herrvonmuellerhoff-400.woff2') format('woff2');
 }
+/* iOS Safari counts the URL bar in 100vh, so a full-height hero jumps and
+   overflows as the bar hides. svh is the stable small-viewport height; the
+   plain vh line stays first as the fallback for older browsers. */
+.h-viewport {
+  height: 100vh;
+  height: 100svh;
+}
+
+.min-h-viewport {
+  min-height: 100vh;
+  min-height: 100svh;
+}
+
 html, body {
   margin: 0;
   padding: 0;

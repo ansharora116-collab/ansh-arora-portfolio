@@ -38,6 +38,7 @@ export const HeroSection: React.FC = () => {
   const [cursorPos, setCursorPos] = useState({ x: -100, y: -100 });
   const [isHovered, setIsHovered] = useState(false);
   const [hasVideo, setHasVideo] = useState(true);
+  const [menuOpen, setMenuOpen] = useState(false);
 
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
@@ -48,11 +49,11 @@ export const HeroSection: React.FC = () => {
   }, []);
 
   return (
-    <section className="relative w-screen h-screen overflow-hidden bg-black text-[#E8DFD8] font-sans selection:bg-[#cbb59d] selection:text-black cursor-none">
+    <section className="relative w-full h-viewport overflow-hidden bg-black text-[#E8DFD8] font-sans selection:bg-[#cbb59d] selection:text-black lg:cursor-none">
       {/* ================= 1. MINIMAL CUSTOM CURSOR ================= */}
       {cursorPos.x >= 0 && (
         <motion.div
-          className="fixed top-0 left-0 pointer-events-none z-50 rounded-full border border-[#D4AF37]/40 flex items-center justify-center backdrop-blur-[1px]"
+          className="fixed top-0 left-0 pointer-events-none z-50 rounded-full border border-[#D4AF37]/40 hidden lg:flex items-center justify-center backdrop-blur-[1px]"
           animate={{
             x: cursorPos.x - (isHovered ? 24 : 5),
             y: cursorPos.y - (isHovered ? 24 : 5),
@@ -73,7 +74,13 @@ export const HeroSection: React.FC = () => {
             loop
             playsInline
             onError={() => setHasVideo(false)}
-            className="h-screen w-auto max-w-none object-contain origin-right scale-95 md:scale-[0.98] lg:scale-100"
+            /*
+             * On a phone the old rule (full height, auto width, right-aligned)
+             * rendered the frame ~1470px wide against a 393px screen, so only
+             * the empty right-hand edge was visible. Below lg it now covers the
+             * viewport, positioned so the subject stays in frame.
+             */
+            className="h-full w-full object-cover object-[66%_center] lg:h-screen lg:w-auto lg:max-w-none lg:object-contain lg:object-center lg:origin-right lg:scale-100"
           >
             <source src={`${import.meta.env.BASE_URL}videos/hero.mp4`} type="video/mp4" />
           </video>
@@ -82,15 +89,22 @@ export const HeroSection: React.FC = () => {
           <motion.div
             animate={{ opacity: [0.55, 0.8, 0.55], scale: [1, 1.04, 1] }}
             transition={{ duration: 9, repeat: Infinity, ease: 'easeInOut' }}
-            className="h-screen w-[55vw] bg-[radial-gradient(ellipse_at_60%_45%,rgba(212,175,55,0.22),rgba(140,109,79,0.10)_45%,transparent_72%)]"
+            className="h-full w-full lg:h-screen lg:w-[55vw] bg-[radial-gradient(ellipse_at_60%_45%,rgba(212,175,55,0.22),rgba(140,109,79,0.10)_45%,transparent_72%)]"
           />
         )}
 
-        {/* Seamless Soft Left Edge Blend */}
-        <div className="absolute inset-y-0 left-0 w-1/2 bg-gradient-to-r from-black via-black/85 to-transparent pointer-events-none" />
+        {/* Phones: the video is full-bleed behind the copy, so it needs an
+            overall scrim for the text to stay readable. */}
+        <div className="absolute inset-0 bg-gradient-to-b from-black/85 via-black/55 to-black/95 pointer-events-none lg:hidden" />
+        {/* second pass down the text side, so body copy stays legible where it
+            crosses the bright shirt in frame */}
+        <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/30 to-transparent pointer-events-none lg:hidden" />
+
+        {/* Desktop: the original soft left-edge blend. */}
+        <div className="absolute inset-y-0 left-0 w-1/2 bg-gradient-to-r from-black via-black/85 to-transparent pointer-events-none hidden lg:block" />
 
         {/* ================= 3. ANIMATED WATERMARK EMBLEM ================= */}
-        <div className="absolute bottom-6 right-6 lg:bottom-10 lg:right-12 pointer-events-none flex items-center justify-center z-10">
+        <div className="absolute bottom-6 right-6 lg:bottom-10 lg:right-12 pointer-events-none hidden sm:flex items-center justify-center z-10">
           <div className="relative flex items-center justify-center">
             <div className="absolute w-36 h-36 bg-black/85 rounded-full blur-xl" />
 
@@ -122,6 +136,46 @@ export const HeroSection: React.FC = () => {
         </div>
       </div>
 
+      {/* ================= MOBILE MENU PANEL ================= */}
+      {menuOpen && (
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 0.25 }}
+          className="fixed inset-0 z-40 bg-black/97 backdrop-blur-sm md:hidden flex flex-col items-center justify-center gap-2 px-8"
+        >
+          {navItems.map((item, i) => (
+            <motion.a
+              key={item.name}
+              href={item.href}
+              onClick={() => setMenuOpen(false)}
+              initial={{ opacity: 0, y: 12 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.05 + i * 0.05, duration: 0.4 }}
+              className="w-full max-w-xs text-center py-4 text-lg tracking-[0.3em] uppercase text-[#E8DFD8] border-b border-[#8C6D4F]/25 active:text-[#D4AF37]"
+              style={{ fontFamily: "'Bebas Neue', sans-serif" }}
+            >
+              {item.name}
+            </motion.a>
+          ))}
+
+          <motion.a
+            href={profile.resumeUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            onClick={() => setMenuOpen(false)}
+            initial={{ opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.4, duration: 0.4 }}
+            className="mt-6 w-full max-w-xs text-center py-4 border border-[#8C6D4F] text-[11px] tracking-[0.24em] uppercase text-[#EAD8C7]"
+            style={{ fontFamily: "'Montserrat', sans-serif" }}
+          >
+            Download Resume ↓
+          </motion.a>
+        </motion.div>
+      )}
+
       {/* ================= 4. CONTENT LAYER ================= */}
       <div className="relative z-10 flex flex-col justify-between h-full w-full px-6 sm:px-12 lg:px-16 pt-6 pb-8 pointer-events-none">
         
@@ -131,7 +185,7 @@ export const HeroSection: React.FC = () => {
             href="#"
             onMouseEnter={() => setIsHovered(true)}
             onMouseLeave={() => setIsHovered(false)}
-            className="text-xs sm:text-sm font-semibold tracking-[0.35em] uppercase text-[#EAD8C7] hover:opacity-75 transition-opacity"
+            className="text-xs sm:text-sm font-semibold tracking-[0.35em] uppercase text-[#EAD8C7] hover:opacity-75 transition-opacity py-3 -my-3"
             style={{ fontFamily: "'Montserrat', sans-serif" }}
           >
             {profile.navName}
@@ -156,12 +210,33 @@ export const HeroSection: React.FC = () => {
             ))}
           </nav>
 
+          {/* Phones and tablets get no room for the inline nav, so it collapses
+              into this. Without it there was no way to reach a section on a
+              phone except scrolling the whole page. */}
+          <button
+            type="button"
+            aria-label={menuOpen ? 'Close menu' : 'Open menu'}
+            aria-expanded={menuOpen}
+            onClick={() => setMenuOpen((v) => !v)}
+            className="md:hidden ml-auto flex flex-col justify-center items-end gap-[5px] w-11 h-11 -mr-2"
+          >
+            <span
+              className={`block h-[1.5px] bg-[#EAD8C7] transition-all duration-300 ${menuOpen ? 'w-6 translate-y-[6.5px] rotate-45' : 'w-6'}`}
+            />
+            <span
+              className={`block h-[1.5px] bg-[#EAD8C7] transition-all duration-300 ${menuOpen ? 'opacity-0 w-6' : 'w-4'}`}
+            />
+            <span
+              className={`block h-[1.5px] bg-[#EAD8C7] transition-all duration-300 ${menuOpen ? 'w-6 -translate-y-[6.5px] -rotate-45' : 'w-6'}`}
+            />
+          </button>
+
           {/* Right Action */}
           <a
             href="#contact"
             onMouseEnter={() => setIsHovered(true)}
             onMouseLeave={() => setIsHovered(false)}
-            className="group flex items-center space-x-2 text-[11px] tracking-[0.24em] font-light uppercase py-2 px-4 border border-[#8C6D4F]/50 hover:border-[#D4AF37] text-[#EAD8C7] transition-all duration-300 backdrop-blur-sm ml-auto md:ml-0"
+            className="group hidden sm:flex items-center space-x-2 text-[11px] tracking-[0.24em] font-light uppercase py-3 px-4 border border-[#8C6D4F]/50 hover:border-[#D4AF37] text-[#EAD8C7] transition-all duration-300 backdrop-blur-sm ml-auto md:ml-0"
             style={{ fontFamily: "'Montserrat', sans-serif" }}
           >
             <span>LET&apos;S TALK</span>
@@ -179,12 +254,12 @@ export const HeroSection: React.FC = () => {
             variants={containerVariants}
             initial="hidden"
             animate="visible"
-            className="max-w-sm sm:max-w-md md:max-w-lg lg:max-w-[37rem] xl:max-w-[40rem] pointer-events-auto z-20"
+            className="w-full max-w-full sm:max-w-md md:max-w-lg lg:max-w-[37rem] xl:max-w-[40rem] pointer-events-auto z-20"
           >
             {/* Massive Condensed Headline */}
             <motion.div variants={fadeUpVariants} className="relative mb-3.5 select-none">
               <h1
-                className="text-6xl sm:text-7xl md:text-8xl lg:text-[7.2rem] xl:text-[7.8rem] tracking-tight uppercase leading-[0.83]"
+                className="text-[2.75rem] min-[380px]:text-5xl sm:text-7xl md:text-8xl lg:text-[7.2rem] xl:text-[7.8rem] tracking-tight uppercase leading-[0.85] sm:leading-[0.83]"
                 style={{ fontFamily: "'Bebas Neue', sans-serif" }}
               >
                 {profile.headline.map((line, i) => (
@@ -222,7 +297,7 @@ export const HeroSection: React.FC = () => {
             {/* CTA Buttons */}
             <motion.div
               variants={fadeUpVariants}
-              className="flex flex-row items-center gap-4 sm:gap-6"
+              className="flex flex-row flex-wrap items-center gap-3 sm:gap-6"
               style={{ fontFamily: "'Montserrat', sans-serif" }}
             >
               {/* Explore My Work CTA */}
