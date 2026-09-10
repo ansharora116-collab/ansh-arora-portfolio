@@ -2,8 +2,6 @@
  * Every piece of personal content on the site lives here.
  * Edit this file and the whole portfolio updates — you should not
  * need to touch the component files to change your details.
- *
- * Anything marked TODO is a placeholder waiting for your real information.
  */
 
 export const profile = {
@@ -16,40 +14,54 @@ export const profile = {
   /** Single letter used for the emblem watermark over the hero video. */
   monogram: 'A',
   /** The three big stacked words in the hero headline. */
-  headline: ['I BUILD', 'DIGITAL', 'EXPERIENCES'],
+  headline: ['I SCALE', 'BRANDS', 'NATIONWIDE'],
   /** The small spaced-out line under the headline. */
-  disciplines: ['FULL STACK DEVELOPER', 'UI/UX DESIGNER', 'DATA SCIENCE'],
+  disciplines: ['GROWTH & STRATEGY', 'E-COMMERCE', 'OPERATIONS'],
   /** One or two sentences under the disciplines. */
   tagline:
-    'I turn bold ideas into seamless digital experiences. Where frontend meets powerful backend, and code transforms vision into impact.',
+    'I turn market opportunity into operating reality — from a single-city launch to 350+ dark stores across 7 states, with 52% revenue growth along the way.',
   /** The two short uppercase lines in the hero's quote card. */
-  motto: ['CODE IS MY CRAFT.', 'IMPACT IS MY GOAL.'],
-  /** Put your CV at portfolio/public/resume.pdf, or point this elsewhere. */
+  motto: ['STRATEGY IS THE CRAFT.', 'GROWTH IS THE PROOF.'],
+  /** Your CV, served from portfolio/public/resume.pdf. */
   resumeUrl: '/resume.pdf',
-  /** Default GitHub link used by any project that does not set its own. */
-  githubUrl: 'https://github.com/ansharora116-collab',
 } as const;
+
+/** Nav links across the top of the hero. */
+export const navItems = [
+  { name: 'ABOUT', href: '#about' },
+  { name: 'WORK', href: '#work' },
+  { name: 'EXPERTISE', href: '#skills' },
+  { name: 'JOURNEY', href: '#experience' },
+  { name: 'AWARDS', href: '#awards' },
+  { name: 'CONTACT', href: '#contact' },
+];
+
+/** The small gold eyebrow label above each section. */
+export const sectionLabels = {
+  about: '01 / ABOUT ME',
+  work: '02 / SELECTED WORK',
+  skills: '03 / CAPABILITY MATRIX',
+  experience: '04 / JOURNEY',
+  awards: '05 / ACHIEVEMENTS',
+  contact: '06 / CONTACT',
+};
 
 export const about = {
   /** Two stacked lines of the About headline. */
-  headline: ["I DON'T JUST WRITE CODE.", "I BUILD WHAT'S NEXT."],
-  /** Your bio. The name is bolded automatically. */
+  headline: ["I DON'T JUST PITCH GROWTH.", 'I GO OUT AND BUILD IT.'],
+  /** Your bio. Your name is bolded automatically at the front. */
   bio:
-    'a developer focused on building scalable web architectures, AI-integrated platforms, and refined digital experiences. TODO: replace this with two or three sentences about what you actually build and what you are good at.',
-  /**
-   * Four headline numbers. Put in figures you can back up —
-   * an empty array hides the whole strip.
-   */
+    'a business graduate with 14 months across e-commerce, growth and operations. I owned the end-to-end scale-up of a brand from one city to 350+ dark stores across 7 states, drove 52% revenue growth, and opened enterprise accounts worth ₹30L. IESEG France graduate and merit scholarship recipient, now on the Young Leaders Cohort at Masters’ Union.',
+  /** Four headline numbers. An empty array hides the whole strip. */
   stats: [
-    { value: 'TODO', label: 'DSA Solved', gold: false },
-    { value: 'TODO', label: 'CGPA', gold: true },
-    { value: 'TODO', label: 'Projects Shipped', gold: false },
-    { value: 'TODO', label: 'Notable Result', gold: true },
+    { value: '350+', label: 'Dark Stores Scaled', gold: false },
+    { value: '52%', label: 'Revenue Growth', gold: true },
+    { value: '₹30L', label: 'Enterprise Revenue', gold: false },
+    { value: '5X', label: 'Competition Podiums', gold: true },
   ],
   /**
-   * Your portrait. Drop a photo at src/assets/about.png and set this to
-   * `import aboutImg from './assets/about.png'` in AboutSection, or leave
-   * null to render the monogram placeholder frame.
+   * Your portrait. Drop a photo in src/assets/, import it in
+   * AboutSection.tsx and pass it here. Null renders the monogram plate.
    */
   portrait: null as string | null,
 };
@@ -59,86 +71,146 @@ export interface Project {
   title: string;
   category: string;
   description: string;
-  githubUrl?: string;
+  /** Optional CTA at the bottom of the card. Omit both to hide the button. */
+  linkUrl?: string;
+  linkLabel?: string;
+  /** Levers, tools and channels used — rendered as pills. */
   tech: string[];
   metrics: { label: string; value: string }[];
 }
 
-/** The scroll-stacked cards in the Featured Work section. */
+/** The scroll-stacked cards in the Selected Work section. */
 export const projects: Project[] = [
   {
     number: '01',
-    title: 'TODO — Project One',
-    category: 'CATEGORY / DOMAIN',
+    title: 'National Dark-Store Scale-Up',
+    category: 'GROWTH / RETAIL DISTRIBUTION',
     description:
-      'TODO: two or three sentences on what this project does, the interesting engineering problem behind it, and what you personally built.',
-    tech: ['React', 'TypeScript', 'Node.js'],
+      'Owned launch execution end to end as the brand went from a single city to 350+ dark stores across 7 states. Rebuilt the funnel, pricing and paid-channel mix behind that footprint, driving 52% revenue growth over the same period.',
+    linkUrl: 'https://www.linkedin.com/in/ansh-arora-44b51a257',
+    linkLabel: 'VIEW ON LINKEDIN',
+    tech: [
+      'Launch Execution',
+      'Funnel Analysis',
+      'Pricing Strategy',
+      'Paid Channels',
+      'Distribution',
+      'GTM',
+    ],
     metrics: [
-      { label: 'STACK', value: 'TODO' },
-      { label: 'SCALE', value: 'TODO' },
-      { label: 'ROLE', value: 'TODO' },
+      { label: 'FOOTPRINT', value: '350+ dark stores' },
+      { label: 'REACH', value: '7 states' },
+      { label: 'REVENUE', value: '+52%' },
     ],
   },
   {
     number: '02',
-    title: 'TODO — Project Two',
-    category: 'CATEGORY / DOMAIN',
+    title: 'Marketplace Launch & Ops Automation',
+    category: 'E-COMMERCE / OPERATIONS',
     description:
-      'TODO: describe the second project. Lead with the outcome, then the stack.',
-    tech: ['Python', 'FastAPI', 'PostgreSQL'],
+      'Led marketplace launch execution on Meesho and Blinkit, lifting conversion through listing optimisation. Automated the forecasting and planning workflow behind packaging, cutting box-design turnaround time by 86%.',
+    linkUrl: 'https://www.linkedin.com/in/ansh-arora-44b51a257',
+    linkLabel: 'VIEW ON LINKEDIN',
+    tech: [
+      'Meesho',
+      'Blinkit',
+      'Listing Optimisation',
+      'Demand Forecasting',
+      'Process & SOP Design',
+      'Advanced Excel',
+    ],
     metrics: [
-      { label: 'STACK', value: 'TODO' },
-      { label: 'SCALE', value: 'TODO' },
-      { label: 'ROLE', value: 'TODO' },
+      { label: 'CHANNELS', value: 'Meesho & Blinkit' },
+      { label: 'TURNAROUND', value: '−86% time' },
+      { label: 'LEVER', value: 'Listings + Forecasting' },
     ],
   },
   {
     number: '03',
-    title: 'TODO — Project Three',
-    category: 'CATEGORY / DOMAIN',
-    description: 'TODO: describe the third project.',
-    tech: ['Docker', 'REST APIs'],
+    title: 'Enterprise Gifting Accounts',
+    category: 'B2B SALES / KEY ACCOUNTS',
+    description:
+      'Opened corporate gifting as a revenue line — securing ₹30L by spearheading the Adani Group gifting acquisition within the first month, then winning the marquee Holi gifting business through partnership development with Shree Cement.',
+    linkUrl: 'https://www.linkedin.com/in/ansh-arora-44b51a257',
+    linkLabel: 'VIEW ON LINKEDIN',
+    tech: [
+      'Enterprise Sales',
+      'Partnership Development',
+      'Key Account Management',
+      'Negotiation',
+      'Stakeholder Management',
+    ],
     metrics: [
-      { label: 'STACK', value: 'TODO' },
-      { label: 'SCALE', value: 'TODO' },
-      { label: 'ROLE', value: 'TODO' },
+      { label: 'REVENUE', value: '₹30L secured' },
+      { label: 'ACCOUNTS', value: 'Adani, Shree Cement' },
+      { label: 'TIME TO CLOSE', value: 'Within month 1' },
+    ],
+  },
+  {
+    number: '04',
+    title: 'EmpowerLille',
+    category: 'SOCIAL ENTERPRISE / IESEG CAPSTONE',
+    description:
+      'Co-researcher and strategy lead on a B2B2C social enterprise linking waste management with homeless reintegration. Built a dual-revenue model validating unit economics across B2B partnerships and B2C sales, backed by hypothesis-driven primary research.',
+    linkUrl: 'https://www.linkedin.com/in/ansh-arora-44b51a257',
+    linkLabel: 'VIEW ON LINKEDIN',
+    tech: [
+      'Business Modelling',
+      'Unit Economics',
+      'Primary Research',
+      'Hypothesis Testing',
+      'Go-to-Market',
+    ],
+    metrics: [
+      { label: 'VALIDATION', value: '80% of concept' },
+      { label: 'MODEL', value: 'Dual-revenue B2B2C' },
+      { label: 'GRADE', value: 'A' },
     ],
   },
 ];
 
-/** The four bento cards in the Tech Matrix section. */
+/** The four bento cards in the Capability Matrix section. */
 export const skills = [
   {
-    title: 'FRONTEND ARCHITECTURE',
+    title: 'GROWTH & E-COMMERCE',
     badge: 'CORE PILLAR',
-    items: ['React.js', 'TypeScript', 'Tailwind CSS'],
+    items: ['Funnel Analysis', 'Paid Channels', 'Pricing', 'Marketplace Ops', 'Listing Optimisation'],
     description:
-      'TODO: one sentence on what you build on the frontend and what you are known for.',
-    stat: 'TODO',
+      'Owning the commercial funnel end to end — acquisition, pricing and channel mix — and the marketplace operations that turn a listing into repeat revenue.',
+    stat: '+52% REVENUE',
     colSpan: 'lg:col-span-7',
   },
   {
-    title: 'BACKEND & INFRASTRUCTURE',
-    badge: 'SYSTEMS',
-    items: ['Node.js', 'Express.js', 'Docker'],
-    description: 'TODO: one sentence on your backend and infrastructure work.',
-    stat: 'TODO',
+    title: 'OPERATIONS & SCALE',
+    badge: 'EXECUTION',
+    items: ['Launch Execution', 'Process & SOP Design', 'Forecasting', 'Timeline Management'],
+    description:
+      'Building the operating machinery that lets a launch repeat itself across states without losing speed or margin.',
+    stat: '350+ STORES',
     colSpan: 'lg:col-span-5',
   },
   {
-    title: 'DATA PLATFORMS',
-    badge: 'PERSISTENCE',
-    items: ['PostgreSQL', 'MongoDB'],
-    description: 'TODO: one sentence on how you model and query data.',
-    stat: 'TODO',
+    title: 'DATA & INSIGHTS',
+    badge: 'MEASUREMENT',
+    items: ['Advanced Excel', 'Tableau', 'Power BI', 'SPSS', 'Google Sheets'],
+    description:
+      'KPI tracking, funnel and trend analysis, and reporting that makes the next decision obvious.',
+    stat: 'KPI & FUNNEL',
     colSpan: 'lg:col-span-5',
   },
   {
-    title: 'ALGORITHMS & MACHINE LEARNING',
-    badge: 'INTELLIGENCE',
-    items: ['Python', 'C++', 'scikit-learn'],
-    description: 'TODO: one sentence on your algorithms or ML background.',
-    stat: 'TODO',
+    title: 'STRATEGY & ENTERPRISE SALES',
+    badge: 'COMMERCIAL',
+    items: [
+      'Market Sizing',
+      'Competitive Benchmarking',
+      'Unit Economics',
+      'Stakeholder Management',
+      'First-Principles Thinking',
+    ],
+    description:
+      'Sizing the opportunity, benchmarking the field, then carrying it into the room — enterprise accounts closed on the strength of the case.',
+    stat: '₹30L SECURED',
     colSpan: 'lg:col-span-7',
   },
 ];
@@ -155,38 +227,139 @@ export interface RouteStop {
 export const journey: RouteStop[] = [
   {
     id: '01',
-    year: 'TODO — e.g. MAY - JUL 2026',
-    title: 'TODO — ROLE TITLE',
-    organization: 'TODO — COMPANY',
-    description: 'TODO: one sentence on what you did and what you shipped.',
+    year: 'PURSUING',
+    title: 'PGP, TECHNOLOGY & BUSINESS MANAGEMENT',
+    organization: "MASTERS' UNION — NEW DELHI",
+    description:
+      'Selected for the Young Leaders Cohort, building on an operating track record in growth and e-commerce.',
   },
   {
     id: '02',
-    year: 'TODO — e.g. 2025',
-    title: 'TODO — MILESTONE OR ROLE',
-    organization: 'TODO — ORGANIZATION',
-    description: 'TODO: one sentence.',
+    year: "SEPT '25 – JUN '26",
+    title: 'MARKETING EXECUTIVE',
+    organization: 'INDO DIVINE SPIRITUAL SOLUTIONS PVT. LTD. — JAIPUR',
+    description:
+      'Scaled the brand to 350+ dark stores across 7 states, drove 52% revenue growth, and secured ₹30L in enterprise gifting revenue.',
   },
   {
     id: '03',
-    year: 'TODO — e.g. 2023 - 2027',
-    title: 'TODO — YOUR DEGREE',
-    organization: 'TODO — YOUR COLLEGE',
-    description: 'TODO: one sentence on your specialization.',
+    year: "APR '25 – AUG '25",
+    title: 'SALES & MARKETING INTERN',
+    organization: 'JK CEMENTS LTD. — GURGAON',
+    description:
+      'Ran competitive analysis on construction chemicals and shaped regional planning with the Zonal Head, coordinating 16 Area Sales Managers across 5 zones.',
+  },
+  {
+    id: '04',
+    year: '2024 – 2025',
+    title: 'BBA — INTERNATIONAL DEGREE',
+    organization: 'IESEG SCHOOL OF MANAGEMENT — LILLE, FRANCE',
+    description:
+      "Grade 'A' with a EUR 1,241 merit scholarship. Led the EmpowerLille capstone on B2B2C social enterprise design.",
+  },
+  {
+    id: '05',
+    year: "MAY '24 – JUL '24",
+    title: 'MARKETING INTERN',
+    organization: 'SVATANTRA MICRO HOUSING FINANCE — JAIPUR',
+    description:
+      'Mapped customer segments across 12 primary field studies, improved onboarding by 17%, and supported ₹50L+ in loan disbursement within two months.',
+  },
+  {
+    id: '06',
+    year: "AUG '23 – FEB '24",
+    title: 'MARKETING TEAM MEMBER',
+    organization: 'AIESEC IN BENGALURU',
+    description:
+      'Grew youth-exchange enrollments 12% through social and digital content execution, aligning stakeholders across international chapters.',
+  },
+  {
+    id: '07',
+    year: '2022 – 2024',
+    title: 'BBA (HONOURS)',
+    organization: 'CHRIST UNIVERSITY — BENGALURU',
+    description:
+      'GPA 3.36/4, top 20% of cohort. Selected from 400+ students across 4 campuses for the IESEG credit transfer programme.',
   },
 ];
 
+export interface Award {
+  placement: string;
+  level: string;
+  event: string;
+  detail: string;
+}
+
+/** Competition wins and honours. */
+export const awards: Award[] = [
+  {
+    placement: '2ND',
+    level: 'NATIONAL',
+    event: 'Sustainathon',
+    detail: 'Sustainability-driven business solutions.',
+  },
+  {
+    placement: '2ND',
+    level: 'NATIONAL',
+    event: 'Enchainer Business Fest',
+    detail: 'Problem-solving and business strategy.',
+  },
+  {
+    placement: '1ST',
+    level: 'INTER-COLLEGE',
+    event: 'Marketing Premier League',
+    detail: 'Head-to-head marketing challenges.',
+  },
+  {
+    placement: '1ST',
+    level: 'INTRA-COLLEGE',
+    event: 'Colossus Business Fest',
+    detail: 'Competed as PR & Marketing Manager.',
+  },
+  {
+    placement: '2ND',
+    level: 'INTRA-COLLEGE',
+    event: 'Novice Business Fest',
+    detail: 'Strategic marketing and execution.',
+  },
+  {
+    placement: 'AWARD',
+    level: 'IESEG, FRANCE',
+    event: 'EUR 1,241 Merit Scholarship',
+    detail: "Grade 'A' on the international degree.",
+  },
+  {
+    placement: '400+',
+    level: 'SELECTION',
+    event: 'IESEG Credit Transfer Programme',
+    detail: 'Chosen from 400+ students across 4 campuses.',
+  },
+];
+
+/** Positions of responsibility, shown under the awards grid. */
+export const leadership = {
+  note: 'All at Christ University, Bengaluru',
+  roles: [
+    { org: 'SDG CELL', role: 'Sub-Head, Logistics' },
+    { org: 'CUSBMA', role: 'Organisational Committee, Logistics' },
+    { org: 'SWO', role: 'Stage Committee' },
+    { org: 'CAPS', role: 'Research Team Member' },
+  ],
+};
+
 export const contact = {
-  headline: ['INITIALIZE', 'TRANSMISSION.'],
+  headline: ['START A', 'CONVERSATION.'],
   blurb:
-    'Have an ambitious system to architect, an engineering opportunity, or a collaborative inquiry? Send a direct dispatch below.',
+    'Have a brand to scale, a growth problem worth solving, or a role you think I would fit? Send a note below and I will come back to you.',
   /**
-   * Where the contact form sends to. The form is front-end only until you
-   * set this — sign up at formspree.io (or similar) and paste the endpoint,
-   * otherwise submissions are just acknowledged in the UI and discarded.
+   * Where the contact form posts. Empty means the form falls back to opening
+   * the visitor's mail client, so nothing is silently dropped. Paste a
+   * Formspree (or similar) endpoint here to collect submissions properly.
    */
   formEndpoint: '' as string,
-  /** Fallback so people can always reach you even without the form. */
   email: 'ansharora116@gmail.com',
-  footerNote: 'PORTFOLIO // EDITION 2026',
+  phone: '+91 98291 17034',
+  linkedin: 'https://www.linkedin.com/in/ansh-arora-44b51a257',
+  footerNote: 'ANSH ARORA // PORTFOLIO 2026',
+  footerTagline: 'BUILT WITH INTENT',
 };

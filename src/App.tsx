@@ -3,6 +3,7 @@ import { AboutSection } from './components/AboutSection';
 import { ProjectsSection } from './components/ProjectsSection';
 import { SkillsSection } from './components/SkillsSection';
 import { ExperienceSection } from './components/ExperienceSection';
+import { AchievementsSection } from './components/AchievementsSection';
 import { ContactSection } from './components/ContactSection';
 
 function App() {
@@ -13,6 +14,7 @@ function App() {
       <ProjectsSection />
       <SkillsSection />
       <ExperienceSection />
+      <AchievementsSection />
       <ContactSection />
     </div>
   );

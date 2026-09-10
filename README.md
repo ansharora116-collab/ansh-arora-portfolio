@@ -35,28 +35,42 @@ It is organised in the order the page reads:
 | Export | Controls |
 | --- | --- |
 | `profile` | Nav name, hero headline, disciplines, tagline, motto, signature, résumé link |
+| `navItems` | The links across the top nav |
+| `sectionLabels` | The gold `01 / ABOUT ME` eyebrow above each section |
 | `about` | About headline, bio, the four stat figures, portrait |
-| `projects` | The scroll-stacked project cards |
-| `skills` | The four bento cards in the Tech Matrix |
-| `journey` | The vertical experience timeline |
-| `contact` | Contact headline, blurb, form endpoint, email |
+| `projects` | The scroll-stacked Selected Work cards |
+| `skills` | The four bento cards in the Capability Matrix |
+| `journey` | The vertical timeline |
+| `awards` | The Achievements grid |
+| `leadership` | The positions-of-responsibility strip under the awards |
+| `contact` | Contact headline, blurb, form endpoint, email, phone, LinkedIn |
 
-Anything still marked `TODO` is a placeholder waiting for your real details.
+If you add or remove a section, update `sectionLabels` so the numbering stays
+in sequence, and `navItems` so the nav still matches.
 
 ## Adding your media
 
-Three assets are intentionally missing. The site renders complete without them,
-falling back to a gold gradient and a monogram plate, so add them when ready:
+Your résumé is already in place at `public/resume.pdf`, so the hero's Download
+Resume button works. Two assets are still missing — the site renders complete
+without them, falling back to a gold gradient and a monogram plate:
 
 - **Hero video** — put an `.mp4` at `public/videos/hero.mp4`. Without it the hero
-  shows an animated gradient instead.
+  shows an animated gradient, which leaves the right half of the screen fairly
+  bare; a video is what fills it.
 - **Portrait** — put an image in `src/assets/`, then in
   `src/components/AboutSection.tsx` import it and pass it through
   `about.portrait`. Without it you get the monogram plate.
-- **Résumé** — put a PDF at `public/resume.pdf`, or repoint `profile.resumeUrl`.
 
 The favicon at `public/favicon.svg` is a monogram; change the letter in it to
 match `profile.monogram`.
+
+## Fonts
+
+Bebas Neue, Montserrat and Herr Von Muellerhoff are self-hosted from
+`public/fonts` (70 KB total) and declared in `src/index.css`, so the page does
+not block on a third-party request and renders identically offline. Montserrat
+is a single variable file covering weights 300–700. To add a family, drop the
+`.woff2` in `public/fonts` and add an `@font-face` block alongside the others.
 
 ## Making the contact form work
 

@@ -1,7 +1,7 @@
 // src/components/ContactSection.tsx
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { contact } from '../content';
+import { contact, sectionLabels } from '../content';
 
 export const ContactSection: React.FC = () => {
   const [formData, setFormData] = useState({ name: '', email: '', message: '' });
@@ -32,7 +32,7 @@ export const ContactSection: React.FC = () => {
       if (!res.ok) throw new Error(`Request failed with ${res.status}`);
       setSent(true);
     } catch {
-      setError(`Transmission failed. Reach me directly at ${contact.email}.`);
+      setError(`Could not send that. Please reach me directly at ${contact.email}.`);
     } finally {
       setSending(false);
     }
@@ -63,7 +63,7 @@ export const ContactSection: React.FC = () => {
                   className="text-[11px] font-medium tracking-[0.35em] uppercase text-[#D4AF37]"
                   style={{ fontFamily: "'Montserrat', sans-serif" }}
                 >
-                  05 / CONTACT
+                  {sectionLabels.contact}
                 </span>
                 <div className="w-16 h-[1px] bg-gradient-to-r from-[#D4AF37]/80 via-[#8C6D4F]/40 to-transparent" />
               </motion.div>
@@ -96,13 +96,32 @@ export const ContactSection: React.FC = () => {
                 {contact.blurb}
               </p>
 
-              <a
-                href={`mailto:${contact.email}`}
-                className="inline-block mt-6 text-xs tracking-[0.2em] text-[#D4AF37] hover:text-[#F7E7C4] transition-colors"
+              {/* Direct channels, so nobody is forced through the form */}
+              <div
+                className="mt-8 space-y-3 border-t border-[#8C6D4F]/25 pt-6"
                 style={{ fontFamily: "'Montserrat', sans-serif" }}
               >
-                {contact.email} ↗
-              </a>
+                {[
+                  { label: 'EMAIL', value: contact.email, href: `mailto:${contact.email}` },
+                  { label: 'PHONE', value: contact.phone, href: `tel:${contact.phone.replace(/\s/g, '')}` },
+                  { label: 'LINKEDIN', value: '/in/ansh-arora', href: contact.linkedin },
+                ].map((row) => (
+                  <a
+                    key={row.label}
+                    href={row.href}
+                    target={row.href.startsWith('http') ? '_blank' : undefined}
+                    rel={row.href.startsWith('http') ? 'noopener noreferrer' : undefined}
+                    className="flex items-baseline gap-4 group w-fit"
+                  >
+                    <span className="text-[9.5px] font-mono tracking-[0.25em] uppercase text-[#8C6D4F] w-20 shrink-0">
+                      {row.label}
+                    </span>
+                    <span className="text-xs tracking-[0.12em] text-[#D4AF37] group-hover:text-[#F7E7C4] transition-colors">
+                      {row.value} ↗
+                    </span>
+                  </a>
+                ))}
+              </div>
             </div>
           </div>
 
@@ -129,10 +148,10 @@ export const ContactSection: React.FC = () => {
                   ✓
                 </div>
                 <h3 className="text-3xl text-white font-normal uppercase" style={{ fontFamily: "'Bebas Neue', sans-serif" }}>
-                  PACKET DELIVERED
+                  MESSAGE DELIVERED
                 </h3>
                 <p className="text-xs text-[#A8988B] font-light" style={{ fontFamily: "'Montserrat', sans-serif" }}>
-                  Transmission registered successfully.
+                  Thanks — I will get back to you shortly.
                 </p>
               </div>
             ) : (
@@ -141,7 +160,7 @@ export const ContactSection: React.FC = () => {
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
                   <div>
                     <span className="block text-[9.5px] font-mono tracking-[0.2em] uppercase text-[#8C6D4F] mb-2">
-                      // SENDER
+                      // NAME
                     </span>
                     <input
                       type="text"
@@ -156,7 +175,7 @@ export const ContactSection: React.FC = () => {
 
                   <div>
                     <span className="block text-[9.5px] font-mono tracking-[0.2em] uppercase text-[#8C6D4F] mb-2">
-                      // CHANNEL
+                      // EMAIL
                     </span>
                     <input
                       type="email"
@@ -172,14 +191,14 @@ export const ContactSection: React.FC = () => {
 
                 <div>
                   <span className="block text-[9.5px] font-mono tracking-[0.2em] uppercase text-[#8C6D4F] mb-2">
-                    // PAYLOAD
+                    // MESSAGE
                   </span>
                   <textarea
                     required
                     rows={4}
                     value={formData.message}
                     onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                    placeholder="Enter transmission payload..."
+                    placeholder="Tell me what you have in mind..."
                     className="w-full bg-[#120F0C] border border-[#8C6D4F]/30 focus:border-[#D4AF37] text-xs text-white placeholder-[#8C6D4F]/50 p-4 outline-none rounded-sm transition-colors resize-none"
                     style={{ fontFamily: "'Montserrat', sans-serif" }}
                   />
@@ -200,7 +219,7 @@ export const ContactSection: React.FC = () => {
                   className="w-full py-3.5 border border-[#8C6D4F]/50 bg-[#14100D] hover:border-[#D4AF37] hover:bg-[#1A1510] text-[#E8DFD8] hover:text-[#F7E7C4] text-xs font-medium tracking-[0.25em] uppercase transition-all duration-300 shadow-[0_4px_20px_rgba(0,0,0,0.5)] disabled:opacity-50 disabled:cursor-not-allowed"
                   style={{ fontFamily: "'Montserrat', sans-serif" }}
                 >
-                  {sending ? 'DISPATCHING…' : 'EXECUTE DISPATCH ↗'}
+                  {sending ? 'SENDING…' : 'SEND MESSAGE ↗'}
                 </button>
 
               </form>
@@ -215,7 +234,7 @@ export const ContactSection: React.FC = () => {
             {contact.footerNote}
           </span>
           <span className="text-[10px] font-mono text-[#8C6D4F]">
-            © {new Date().getFullYear()} • ENGINEERED WITH PRECISION
+            © {new Date().getFullYear()} • {contact.footerTagline}
           </span>
         </div>
 

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import type { Variants } from 'framer-motion';
-import { skills } from '../content';
+import { skills, sectionLabels } from '../content';
 
 const containerVariants: Variants = {
   hidden: { opacity: 0 },
@@ -53,7 +53,7 @@ export const SkillsSection: React.FC = () => {
             className="text-[11px] font-medium tracking-[0.35em] uppercase text-[#D4AF37]"
             style={{ fontFamily: "'Montserrat', sans-serif" }}
           >
-            03 / TECH MATRIX
+            {sectionLabels.skills}
           </span>
           <div className="w-20 h-[1px] bg-gradient-to-r from-[#D4AF37]/80 via-[#8C6D4F]/40 to-transparent" />
         </motion.div>
@@ -71,10 +71,10 @@ export const SkillsSection: React.FC = () => {
             style={{ fontFamily: "'Bebas Neue', sans-serif" }}
           >
             <span className="block text-transparent bg-clip-text bg-gradient-to-b from-[#FFFFFF] via-[#D5CBC0] to-[#605448] drop-shadow-[0_4px_12px_rgba(0,0,0,0.8)]">
-              ARCHITECTURAL MASTERY.
+              THE OPERATOR'S TOOLKIT.
             </span>
             <span className="block text-transparent bg-clip-text bg-gradient-to-b from-[#F7E7C4] via-[#C99E5D] to-[#543B1A] drop-shadow-[0_8px_25px_rgba(201,158,93,0.35)]">
-              PRECISION APPLIED.
+              APPLIED IN MARKET.
             </span>
           </h2>
         </motion.div>

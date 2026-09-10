@@ -1,7 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import ScrollStack, { ScrollStackItem } from './ScrollStack';
-import { profile, projects } from '../content';
+import { projects, sectionLabels } from '../content';
 
 export const ProjectsSection: React.FC = () => {
   return (
@@ -27,7 +27,7 @@ export const ProjectsSection: React.FC = () => {
             className="text-[11px] font-medium tracking-[0.35em] uppercase text-[#D4AF37]"
             style={{ fontFamily: "'Montserrat', sans-serif" }}
           >
-            02 / FEATURED WORK
+            {sectionLabels.work}
           </span>
           <div className="w-20 h-[1px] bg-gradient-to-r from-[#D4AF37]/80 via-[#8C6D4F]/40 to-transparent" />
         </motion.div>
@@ -45,10 +45,10 @@ export const ProjectsSection: React.FC = () => {
             style={{ fontFamily: "'Bebas Neue', sans-serif" }}
           >
             <span className="block text-transparent bg-clip-text bg-gradient-to-b from-[#FFFFFF] via-[#D5CBC0] to-[#605448] drop-shadow-[0_4px_12px_rgba(0,0,0,0.8)]">
-              SELECTED WORKS.
+              SELECTED WORK.
             </span>
             <span className="block text-transparent bg-clip-text bg-gradient-to-b from-[#F7E7C4] via-[#C99E5D] to-[#543B1A] drop-shadow-[0_8px_25px_rgba(201,158,93,0.35)]">
-              ENGINEERED VALUE.
+              MEASURED IMPACT.
             </span>
           </h2>
 
@@ -56,7 +56,7 @@ export const ProjectsSection: React.FC = () => {
             className="text-xs sm:text-sm font-light text-[#A8988B] max-w-sm mt-4 md:mt-0 leading-relaxed"
             style={{ fontFamily: "'Montserrat', sans-serif" }}
           >
-            Scroll down to unfold the system architecture cards. Each platform was built to solve complex operational challenges.
+            Scroll to unfold each engagement. Every one of them was owned end to end, from first plan to the number it moved.
           </p>
         </motion.div>
 
@@ -140,7 +140,7 @@ export const ProjectsSection: React.FC = () => {
                   <div className="lg:col-span-5 flex flex-col justify-between h-full space-y-6 lg:pl-6 lg:border-l lg:border-[#8C6D4F]/25">
                     <div className="space-y-3">
                       <span className="text-[9.5px] font-mono tracking-[0.25em] uppercase text-[#8C6D4F] block mb-2">
-                        // ARCHITECTURE METRICS
+                        // IMPACT METRICS
                       </span>
                       {project.metrics.map((m) => (
                         <div
@@ -157,16 +157,18 @@ export const ProjectsSection: React.FC = () => {
                       ))}
                     </div>
 
-                    <a
-                      href={project.githubUrl ?? profile.githubUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center justify-center space-x-3 px-6 py-3.5 border border-[#8C6D4F] bg-[#16120E] hover:border-[#D4AF37] hover:bg-[#D4AF37] text-[#EAD8C7] hover:text-black text-[11px] font-medium tracking-[0.24em] uppercase transition-all duration-300 shadow-[0_0_20px_rgba(212,175,55,0.1)]"
-                      style={{ fontFamily: "'Montserrat', sans-serif" }}
-                    >
-                      <span>VIEW ON GITHUB</span>
-                      <span className="text-xs">↗</span>
-                    </a>
+                    {project.linkUrl && (
+                      <a
+                        href={project.linkUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center justify-center space-x-3 px-6 py-3.5 border border-[#8C6D4F] bg-[#16120E] hover:border-[#D4AF37] hover:bg-[#D4AF37] text-[#EAD8C7] hover:text-black text-[11px] font-medium tracking-[0.24em] uppercase transition-all duration-300 shadow-[0_0_20px_rgba(212,175,55,0.1)]"
+                        style={{ fontFamily: "'Montserrat', sans-serif" }}
+                      >
+                        <span>{project.linkLabel ?? 'VIEW MORE'}</span>
+                        <span className="text-xs">↗</span>
+                      </a>
+                    )}
                   </div>
 
                 </div>

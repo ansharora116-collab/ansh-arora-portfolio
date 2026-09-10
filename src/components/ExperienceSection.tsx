@@ -1,7 +1,7 @@
 // src/components/ExperienceSection.tsx
 import React, { useRef } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
-import { journey } from '../content';
+import { journey, sectionLabels } from '../content';
 
 export const ExperienceSection: React.FC = () => {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -36,7 +36,7 @@ export const ExperienceSection: React.FC = () => {
             className="text-[11px] font-medium tracking-[0.35em] uppercase text-[#D4AF37]"
             style={{ fontFamily: "'Montserrat', sans-serif" }}
           >
-            04 / EXPERIENCE
+            {sectionLabels.experience}
           </span>
           <div className="w-20 h-[1px] bg-gradient-to-r from-[#D4AF37]/80 via-[#8C6D4F]/40 to-transparent" />
         </motion.div>
@@ -54,10 +54,10 @@ export const ExperienceSection: React.FC = () => {
             style={{ fontFamily: "'Bebas Neue', sans-serif" }}
           >
             <span className="block text-transparent bg-clip-text bg-gradient-to-b from-[#FFFFFF] via-[#D5CBC0] to-[#605448] drop-shadow-[0_4px_12px_rgba(0,0,0,0.8)]">
-              EXPERIENCE &amp;
+              THE ROUTE
             </span>
             <span className="block text-transparent bg-clip-text bg-gradient-to-b from-[#F7E7C4] via-[#C99E5D] to-[#543B1A] drop-shadow-[0_8px_25px_rgba(201,158,93,0.35)]">
-              MILESTONES.
+              SO FAR.
             </span>
           </h2>
         </motion.div>

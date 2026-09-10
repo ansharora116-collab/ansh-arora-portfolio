@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import type { Variants } from 'framer-motion';
-import { profile } from '../content';
+import { profile, navItems } from '../content';
 
 const containerVariants: Variants = {
   hidden: { opacity: 0 },
@@ -32,14 +32,6 @@ const headlineGradients = [
   'bg-gradient-to-b from-[#FFFFFF] via-[#D5CBC0] to-[#605448] drop-shadow-[0_4px_12px_rgba(0,0,0,0.85)]',
   'bg-gradient-to-b from-[#F7E7C4] via-[#C99E5D] to-[#543B1A] drop-shadow-[0_8px_25px_rgba(201,158,93,0.35)]',
   'bg-gradient-to-b from-[#DFBE8A] via-[#9B7640] to-[#342410] drop-shadow-[0_10px_30px_rgba(155,118,64,0.4)]',
-];
-
-const navItems = [
-  { name: 'ABOUT', href: '#about' },
-  { name: 'PROJECTS', href: '#work' },
-  { name: 'SKILLS', href: '#skills' },
-  { name: 'EXPERIENCE', href: '#experience' },
-  { name: 'CONTACT', href: '#contact' },
 ];
 
 export const HeroSection: React.FC = () => {
@@ -147,7 +139,7 @@ export const HeroSection: React.FC = () => {
 
           {/* Navigation Links */}
           <nav
-            className="hidden md:flex items-center space-x-8 lg:space-x-10 text-[11px] tracking-[0.28em] font-light uppercase text-[#C4B5A5] absolute left-1/2 -translate-x-1/2"
+            className="hidden md:flex items-center space-x-5 lg:space-x-7 text-[10px] lg:text-[11px] tracking-[0.2em] lg:tracking-[0.24em] font-light uppercase text-[#C4B5A5] absolute left-1/2 -translate-x-1/2"
             style={{ fontFamily: "'Montserrat', sans-serif" }}
           >
             {navItems.map((item) => (
