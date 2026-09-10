@@ -67,16 +67,36 @@ export const HeroSection: React.FC = () => {
       {/* ================= 2. FIXED VIDEO LAYER ================= */}
       <div className="fixed inset-0 z-0 overflow-hidden pointer-events-none bg-black flex items-center justify-end">
         {hasVideo ? (
-          <video
-            autoPlay
-            muted
-            loop
-            playsInline
-            onError={() => setHasVideo(false)}
-            className="h-screen w-auto max-w-none object-contain origin-right scale-95 md:scale-[0.98] lg:scale-100"
-          >
-            <source src={`${import.meta.env.BASE_URL}videos/hero.mp4`} type="video/mp4" />
-          </video>
+          <div className="relative flex items-center justify-center mr-[3vw]">
+            <video
+              autoPlay
+              muted
+              loop
+              playsInline
+              onError={() => setHasVideo(false)}
+              /*
+               * Capped at the file's native 1024x592 so it is never scaled up.
+               * Stretching it to the full viewport height blew it up past 1.5x
+               * and visibly softened the image. Phones get a larger share of
+               * the viewport, where even 88vw stays well under native width.
+               */
+              className="block w-auto h-auto object-contain max-w-[88vw] max-h-[42vh] md:max-w-[min(58vw,1024px)] md:max-h-[min(76vh,592px)]"
+            >
+              <source src={`${import.meta.env.BASE_URL}videos/hero.mp4`} type="video/mp4" />
+            </video>
+
+            {/*
+              Feather all four edges into the page. These are black gradients
+              over a black background rather than a CSS mask: the result is the
+              same, and it does not depend on mask support.
+            */}
+            <div className="absolute inset-0 pointer-events-none">
+              <div className="absolute inset-y-0 left-0 w-2/5 bg-gradient-to-r from-black via-black/75 to-transparent" />
+              <div className="absolute inset-y-0 right-0 w-1/4 bg-gradient-to-l from-black via-black/55 to-transparent" />
+              <div className="absolute inset-x-0 top-0 h-1/4 bg-gradient-to-b from-black via-black/55 to-transparent" />
+              <div className="absolute inset-x-0 bottom-0 h-1/4 bg-gradient-to-t from-black via-black/55 to-transparent" />
+            </div>
+          </div>
         ) : (
           /* Fallback until a video is placed at public/videos/hero.mp4 */
           <motion.div
